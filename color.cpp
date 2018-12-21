@@ -270,11 +270,12 @@ void color_laplacian(char *name)
 
 	destroyAllWindows();
 }
+
+
+// call back function of color_ratio
 char *winname = "color";
 static int BlueRatio = 0;
-
 static vector<Mat> img_channel(3);
-
 void color_change(int, void*)
 {
 	Mat YCrCb, bgr;
@@ -309,7 +310,7 @@ void color_ratio(char *name) {
 
 void color_segment(char *name) 
 {
-	Mat input_img;
+	Mat input_img, gray;
 	input_img = imread(name, 1);
 	if (input_img.empty())
 		return;
@@ -322,18 +323,20 @@ void color_segment(char *name)
 
 	split(hsv, ch);
 	threshold(ch[1], maskS, 30, 255, THRESH_BINARY);
-	imshow("mask", maskS);
-	bitwise_and(ch[0], maskS, ch[0]);
-	inRange(ch[0], Scalar(0), Scalar(30), maskH);
-	bitwise_and(maskH, ch[0], ch[0]);
-	imshow("masked H", ch[0]);
-	bitwise_and(maskH, ch[1], ch[1]);
-	//ch[1] = mask;
-	merge(ch, img);
+	imshow("maskS", maskS);
+	//bitwise_and(ch[0], maskS, ch[0]);
+	inRange(ch[0], Scalar(0), Scalar(20), maskH);
+	imshow("maskH", maskH);
+	bitwise_and(maskH, maskS, mask);
+	imshow("masked S&H", mask);
+	bitwise_and(mask, ch[1], ch[1]);
+	//cvtColor(input_img, gray, COLOR_BGR2GRAY);
+	bitwise_and(ch[2], mask, ch[2]);
+    merge(ch, img);
 	cvtColor(img, img, COLOR_HSV2BGR);
 	//cvtColor(mask, mask, COLOR_GRAY2BGR);
 	//bitwise_and(mask, input_img,img);
-	imshow("img", img);
+	imshow("masked img", img);
 
 	cvtColor(input_img, hsv, COLOR_BGR2HSV);
 	split(hsv, ch);

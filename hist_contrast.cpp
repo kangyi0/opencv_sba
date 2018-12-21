@@ -69,6 +69,7 @@ void sharpening(char *name) {
 	waitKey(0);
 }
 
+// Revised 12/12/2018
 #define ROW 3
 #define COL 4
 #define SUB_WIDTH 300
@@ -96,6 +97,7 @@ void change_contrast_brightness(char *name)
 			b = j * 60;
 			ROI = a * img + b;
 			sprintf(title, "a=%2.1f,b=%2.1f", a, b);
+			putText(ROI, title, Point(25,15), FONT_HERSHEY_PLAIN, 1.0, Scalar(0), 2);
 		}
 	imshow("contrast", big);
 	waitKey(0);

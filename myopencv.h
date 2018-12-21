@@ -84,4 +84,10 @@ void sol_problem_6(char *name);
 void sol_problem_7(char *name);
 void sol_problem_9(char *name);
 
+void gamma_tranformTest(char *name);
+void thresh_test(char *name);
+void thresh_otsu(char *name);
+void adaptive_threshold_test(char *name);
+void vignette(char *name);
+
 #endif
